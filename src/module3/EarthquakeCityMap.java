@@ -8,14 +8,13 @@ import java.util.List;
 
 //Processing library
 import processing.core.PApplet;
-
+import processing.core.PGraphics;
 //Unfolding libraries
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
-import de.fhpotsdam.unfolding.providers.Google;
-import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.*;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 
 //Parsing library
@@ -58,7 +57,10 @@ public class EarthquakeCityMap extends PApplet {
 		    earthquakesURL = "2.5_week.atom"; 	// Same feed, saved Aug 7, 2015, for working offline
 		}
 		else {
-			map = new UnfoldingMap(this, 200, 50, 700, 500, new Google.GoogleMapProvider());
+			map = new UnfoldingMap(this, 200, 50, 700, 500, 
+					new Microsoft.HybridProvider()
+//					new Google.GoogleMapProvider()
+				);
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
 			//earthquakesURL = "2.5_week.atom";
 		}
@@ -124,10 +126,10 @@ public class EarthquakeCityMap extends PApplet {
 	    // above if you want to change what you mean by "moderate" and "light")
 	    if (mag < THRESHOLD_LIGHT) {
 	    	marker.setColor(blue);
-	    	marker.setRadius(3);
+	    	marker.setRadius(4);
 	    } else if (mag < THRESHOLD_MODERATE) {
 	    	marker.setColor(yellow);
-	    	marker.setRadius(7);
+	    	marker.setRadius(8);
 	    } else {
 	    	marker.setColor(red);
 	    	marker.setRadius(12);
@@ -150,6 +152,8 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
+		// map coordinates are: ( 200, 50, 700, 500)
+		rect(50, 50, 100, 250, 4);
 	
 	}
 }
