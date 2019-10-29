@@ -1,6 +1,7 @@
 package module4;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
@@ -13,6 +14,7 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MultiMarker;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.Microsoft;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import parsing.ParseFeed;
 import processing.core.PApplet;
@@ -60,6 +62,10 @@ public class EarthquakeCityMap extends PApplet {
 	// A List of country markers
 	private List<Marker> countryMarkers;
 	
+	public static final int RED_RADIUS = 13;
+	public static final int YELLOW_RADIUS = 9;
+	public static final int BLUE_RADIUS = 5;
+	
 	public void setup() {		
 		// (1) Initializing canvas and map tiles
 		size(900, 700, OPENGL);
@@ -68,15 +74,18 @@ public class EarthquakeCityMap extends PApplet {
 		    earthquakesURL = "2.5_week.atom";  // The same feed, but saved August 7, 2015
 		}
 		else {
-			map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
+			map = new UnfoldingMap(this, 200, 50, 650, 600, 
+//					new Google.GoogleMapProvider()
+					new Microsoft.HybridProvider()
+					);
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
-		    //earthquakesURL = "2.5_week.atom";
+//		    earthquakesURL = "2.5_week.atom";
 		}
 		MapUtils.createDefaultEventDispatcher(this, map);
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		//earthquakesURL = "test1.atom";
+//		earthquakesURL = "test1.atom";
 		//earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
@@ -127,6 +136,7 @@ public class EarthquakeCityMap extends PApplet {
 		map.draw();
 		addKey();
 		
+		
 	}
 	
 	// helper method to draw key in GUI
@@ -152,6 +162,39 @@ public class EarthquakeCityMap extends PApplet {
 		text("5.0+ Magnitude", 75, 125);
 		text("4.0+ Magnitude", 75, 175);
 		text("Below 4.0", 75, 225);
+		
+		
+		// map coordinates are: ( 200, 50, 700, 500)
+//		fill(255);
+//		rect(25, 50, 140, 250, 4);
+//		
+//		//Legend
+//		fill(0);
+//		textSize(15);
+//		text("Legend", 67, 70);
+//		line(67, 73, 118, 73);
+//		
+//		//5.0 key
+//		fill(255, 0, 0);
+//		ellipse(40, 90, RED_RADIUS, RED_RADIUS);
+//		
+//		fill(0);
+//		textSize(12);
+//		text("5.0+ Magnitude", 60, 95);
+//		
+//		//4.0
+//		fill(255, 255, 0);
+//		ellipse(40, 130, YELLOW_RADIUS, YELLOW_RADIUS);
+//		
+//		fill(0);
+//		text("4.0+ Magnitude", 60, 135);
+//	
+//		// Smaller than 4.0
+//		fill(0, 0, 255);
+//		ellipse(40, 170, BLUE_RADIUS, BLUE_RADIUS);
+//		
+//		fill(0);
+//		text("Below 4.0", 60, 175);
 	}
 
 	
@@ -170,6 +213,9 @@ public class EarthquakeCityMap extends PApplet {
 		// If isInCountry ever returns true, isLand should return true.
 		for (Marker m : countryMarkers) {
 			// TODO: Finish this method using the helper method isInCountry
+			if(isInCountry(earthquake, m) ) {
+				return true;
+			}
 			
 		}
 		
@@ -210,8 +256,22 @@ public class EarthquakeCityMap extends PApplet {
 		//  * If you know your Marker, m, is a LandQuakeMarker, then it has a "country" 
 		//      property set.  You can get the country with:
 		//        String country = (String)m.getProperty("country");
+		HashMap<String, Integer> eqPerCountry = new HashMap<String, Integer>();
 		
+		for ( Marker m : quakeMarkers) {
+			String name = (String) m.getProperty("name");
+			Integer temp = 1;
+			// If the key is contained in the hashmap
+			if (m instanceof LandQuakeMarker && eqPerCountry.containsKey(name) ) {
+				eqPerCountry.put(name, eqPerCountry.get(name) + 1);
+			//Not in the hashmap
+			} else {
+				eqPerCountry.put(name, temp);
+				temp += 1;
+			}
+		}
 		
+		System.out.println(eqPerCountry);
 	}
 	
 	

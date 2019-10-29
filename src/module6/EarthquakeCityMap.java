@@ -2,6 +2,7 @@ package module6;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
@@ -75,7 +76,7 @@ public class EarthquakeCityMap extends PApplet {
 		else {
 			map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
-		    //earthquakesURL = "2.5_week.atom";
+//		    earthquakesURL = "test2.atom";
 		}
 		MapUtils.createDefaultEventDispatcher(this, map);
 		
@@ -124,7 +125,7 @@ public class EarthquakeCityMap extends PApplet {
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
 	    
-	    
+	    sortAndPrint(20);
 	}  // End setup
 	
 	
@@ -139,6 +140,22 @@ public class EarthquakeCityMap extends PApplet {
 	// TODO: Add the method:
 	//   private void sortAndPrint(int numToPrint)
 	// and then call that method from setUp
+	private void sortAndPrint(int numToPrint) {
+		if (numToPrint > quakeMarkers.size()) {
+			numToPrint = quakeMarkers.size();
+		}
+		ArrayList<EarthquakeMarker> earthquakes = new ArrayList<EarthquakeMarker>();
+		for (Marker m : quakeMarkers) {
+			EarthquakeMarker marker = (EarthquakeMarker) m;
+			earthquakes.add(marker);
+		}
+		Collections.sort(earthquakes);
+		for (int i = 0; i < numToPrint; i++) {
+			System.out.println(earthquakes.get(i));
+		}
+	}
+	
+	
 	
 	/** Event handler that gets called automatically when the 
 	 * mouse moves.

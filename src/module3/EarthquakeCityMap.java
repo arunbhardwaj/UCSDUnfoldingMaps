@@ -8,7 +8,6 @@ import java.util.List;
 
 //Processing library
 import processing.core.PApplet;
-import processing.core.PGraphics;
 //Unfolding libraries
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.marker.Marker;
@@ -48,6 +47,11 @@ public class EarthquakeCityMap extends PApplet {
 	//feed with magnitude 2.5+ Earthquakes
 	private String earthquakesURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.atom";
 
+	public static final int RED_RADIUS = 13;
+	public static final int YELLOW_RADIUS = 9;
+	public static final int BLUE_RADIUS = 5;
+	
+	
 	
 	public void setup() {
 		size(950, 600, OPENGL);
@@ -126,13 +130,13 @@ public class EarthquakeCityMap extends PApplet {
 	    // above if you want to change what you mean by "moderate" and "light")
 	    if (mag < THRESHOLD_LIGHT) {
 	    	marker.setColor(blue);
-	    	marker.setRadius(4);
+	    	marker.setRadius(BLUE_RADIUS);
 	    } else if (mag < THRESHOLD_MODERATE) {
 	    	marker.setColor(yellow);
-	    	marker.setRadius(8);
+	    	marker.setRadius(YELLOW_RADIUS);
 	    } else {
 	    	marker.setColor(red);
-	    	marker.setRadius(12);
+	    	marker.setRadius(RED_RADIUS);
 
 	    }
 	    
@@ -153,7 +157,35 @@ public class EarthquakeCityMap extends PApplet {
 	{	
 		// Remember you can use Processing's graphics methods here
 		// map coordinates are: ( 200, 50, 700, 500)
-		rect(50, 50, 100, 250, 4);
+		fill(255);
+		rect(25, 50, 140, 250, 4);
+		
+		//Legend
+		fill(0);
+		textSize(15);
+		text("Legend", 67, 70);
+		line(67, 73, 118, 73);
+		
+		//5.0 key
+		fill(255, 0, 0);
+		ellipse(40, 90, RED_RADIUS, RED_RADIUS);
+		
+		fill(0);
+		textSize(12);
+		text("5.0+ Magnitude", 60, 95);
+		
+		//4.0
+		fill(255, 255, 0);
+		ellipse(40, 130, YELLOW_RADIUS, YELLOW_RADIUS);
+		
+		fill(0);
+		text("4.0+ Magnitude", 60, 135);
 	
+		// Smaller than 4.0
+		fill(0, 0, 255);
+		ellipse(40, 170, BLUE_RADIUS, BLUE_RADIUS);
+		
+		fill(0);
+		text("Below 4.0", 60, 175);
 	}
 }

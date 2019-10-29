@@ -11,6 +11,8 @@ import processing.core.PGraphics;
  */
 public class OceanQuakeMarker extends EarthquakeMarker {
 	
+	private static final float WIDTH = 10;
+	
 	public OceanQuakeMarker(PointFeature quake) {
 		super(quake);
 		
@@ -30,7 +32,7 @@ public class OceanQuakeMarker extends EarthquakeMarker {
 		// and how it is set in the EarthquakeMarker constructor
 		
 		// TODO: Implement this method
-		
+		pg.rect(x, y, WIDTH, WIDTH);
 	}
 	
 

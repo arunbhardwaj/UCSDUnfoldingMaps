@@ -11,6 +11,7 @@ import processing.core.PGraphics;
  */
 public class LandQuakeMarker extends EarthquakeMarker {
 	
+	private static final float RADIUS = 7 ;
 	
 	public LandQuakeMarker(PointFeature quake) {
 		
@@ -34,6 +35,11 @@ public class LandQuakeMarker extends EarthquakeMarker {
 		
 		// TODO: Implement this method
 		
+		pg.ellipse(x, y, RADIUS, RADIUS);
+		
+		
+		// Restore previous drawing style
+	
 	}
 	
 
