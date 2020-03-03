@@ -1,4 +1,6 @@
 # UCSDUnfoldingMaps
+In order to use the following applet, download the source files. Navigate to any one of the module 1-6 directories and run [EarthquakeCityMap.java](https://github.com/arunbhardwaj/UCSDUnfoldingMaps/blob/master/src/module6/EarthquakeCityMap.java) from the command line. Due to modern browsers no longer supporting Java applets, command line is the only way to run the applet. 
+Optional: to see the progression from module 1 to 6, run the EarthquakeCityMap.java file from the respective directory. 
 ## What I Learned
 - How to create, manipulate and style GUI's to very specific standards (aka my own nitpicking preferences)
 - How to add features such as buttons, markers, etc.
